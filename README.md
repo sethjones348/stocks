@@ -7,7 +7,7 @@ Simple stock API for fetching information related to stocks.
   - `Java 8` or higher
   - `Docker`
   - `Maven`
-  - 
+  
 ## Acquiring an API key for the Polygon Stock API
 - Navigate to https://polygon.io/
 - Create a free account
