@@ -26,8 +26,12 @@ Simple stock API for fetching information related to stocks.
 - Execute the command: `./mvnw clean package`
 - Run the following from the root: `echo ENV POLYGON_API_KEY="<INSERT_YOUR_API_KEY>" >> Dockerfile`
 - Run the following: `docker build -t <INSERT_WHAT_YOU_WANT_TO_CALL_THIS_IMAGE> .`
-- Run the following: `docker run -p 8080:8080 -t <THE_NAME_YOU_MADE_UP_IN_THE_PREVIOUS_COMMAND>`
+- Run the following: `docker run -e POLYGON_API_KEY=<your key> -p 8080:8080 -t <THE_NAME_YOU_MADE_UP_IN_THE_PREVIOUS_COMMAND>`
 
+### Using Docker, batteries included approach:
+Note: For those that do not have Maven or appropriate Java prereqs, feel free to use the following commands to build inside docker, for a "batteries included" approach:
+- Execute the command: `docker build -f Dockerfile.Maven -t <your image> .`
+- Run the following: `docker run -e POLYGON_API_KEY=<your key> -p 8080:8080 -t <your image>:latest`
 ## Usage
 - Open a separate terminal
 - Run the following: `curl localhost:8080/stocks/AAPL`
