@@ -8,6 +8,6 @@ class StocksApplicationTests {
 
 	@Test
 	void contextLoads() {
+		//Do nothing
 	}
-
 }
