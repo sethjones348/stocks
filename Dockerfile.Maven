@@ -1,0 +1,4 @@
+FROM maven:3.8.5-jdk-11
+COPY ./ ./
+RUN mvn clean package
+CMD ["java", "-jar", "target/stocks-0.0.1-SNAPSHOT.jar"]
