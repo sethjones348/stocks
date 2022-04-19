@@ -7,16 +7,16 @@ public class ClosingPrice {
 
     private BigDecimal closingPrice;
 
-    public ClosingPrice(String date, BigDecimal closingPrice){
+    public ClosingPrice(String date, BigDecimal closingPrice) {
         this.date = date;
         this.closingPrice = closingPrice;
     }
 
-    public String getDate(){
+    public String getDate() {
         return this.date;
     }
 
-    public BigDecimal getClosingPrice(){
+    public BigDecimal getClosingPrice() {
         return this.closingPrice;
     }
 }

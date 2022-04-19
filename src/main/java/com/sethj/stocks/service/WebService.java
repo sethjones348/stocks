@@ -19,15 +19,15 @@ public class WebService {
 
     private final String apiKey;
 
-    public WebService(){
+    public WebService() {
         apiKey = System.getenv("POLYGON_API_KEY");
 
         if (apiKey == null || apiKey.isEmpty()) {
             System.err.println("Make sure you set your polygon API key in the POLYGON_API_KEY environment variable!");
         }
     }
-    
-    public String getApiKey(){
+
+    public String getApiKey() {
         return this.apiKey;
     }
 
@@ -36,17 +36,17 @@ public class WebService {
         ClosingPrice closingPrice = new ClosingPrice(date, BigDecimal.ZERO);
 
         apiCallUrl
-            .append(POLYGON_IO_DAILY_OPEN_CLOSE_URL)
-            .append("/").append(symbol)
-            .append("/").append(date)
-            .append("?adjusted=true")
-            .append("&apiKey=").append(this.apiKey);
+                .append(POLYGON_IO_DAILY_OPEN_CLOSE_URL)
+                .append("/").append(symbol)
+                .append("/").append(date)
+                .append("?adjusted=true")
+                .append("&apiKey=").append(this.apiKey);
 
-        try{    
+        try {
             URL url = new URL(apiCallUrl.toString());
-    
+
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            
+
             conn.setRequestMethod("GET");
             conn.connect();
 
@@ -59,7 +59,7 @@ public class WebService {
             } else {
                 streamReader = new InputStreamReader(conn.getInputStream());
             }
-            
+
             BufferedReader in = new BufferedReader(streamReader);
             String inputLine;
             StringBuffer content = new StringBuffer();
@@ -72,26 +72,26 @@ public class WebService {
             conn.disconnect();
 
             System.out.println(content.toString());
-        
+
             JSONObject obj = new JSONObject(content.toString());
 
             String status = obj.getString("status");
             BigDecimal close = null;
 
-            if(status.equals("OK")){
+            if (status.equals("OK")) {
                 close = obj.getBigDecimal("close");
             }
 
             System.out.println("Closing price: " + close);
             closingPrice = new ClosingPrice(date, close);
 
-        } catch (MalformedURLException m){
+        } catch (MalformedURLException m) {
             System.out.println("URL was formatted incorrectly");
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
 
         return closingPrice;
     }
-    
+
 }

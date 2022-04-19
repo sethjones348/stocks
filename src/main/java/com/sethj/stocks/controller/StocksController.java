@@ -12,12 +12,12 @@ public class StocksController {
 
     private StocksService stocksService;
 
-    public StocksController(StocksService stocksService){
+    public StocksController(StocksService stocksService) {
         this.stocksService = stocksService;
     }
 
-	@GetMapping("/stocks/{symbol}")
-    public ResponseEntity<StocksResponse> getStocksBySymbol(@PathVariable String symbol){
+    @GetMapping("/stocks/{symbol}")
+    public ResponseEntity<StocksResponse> getStocksBySymbol(@PathVariable String symbol) {
         return stocksService.getStocksBySymbol(symbol);
     }
 }

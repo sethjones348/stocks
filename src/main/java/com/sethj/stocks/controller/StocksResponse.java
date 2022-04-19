@@ -9,24 +9,24 @@ public class StocksResponse {
 
     List<ClosingPrice> closingPrices;
 
-    public StocksResponse(String averagePrice, List<ClosingPrice> closingPrices){
+    public StocksResponse(String averagePrice, List<ClosingPrice> closingPrices) {
         this.averagePrice = averagePrice;
         this.closingPrices = closingPrices;
     }
 
-    public String getAveragePrice(){
+    public String getAveragePrice() {
         return averagePrice;
     }
 
-    public void setAveragePrice(String averagePrice){
+    public void setAveragePrice(String averagePrice) {
         this.averagePrice = averagePrice;
     }
 
-    public List<ClosingPrice> getClosingPrices(){
+    public List<ClosingPrice> getClosingPrices() {
         return closingPrices;
     }
 
-    public void setClosingPrices(List<ClosingPrice> closingPrices){
+    public void setClosingPrices(List<ClosingPrice> closingPrices) {
         this.closingPrices = closingPrices;
     }
 }

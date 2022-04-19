@@ -5,9 +5,6 @@ import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import com.sethj.stocks.controller.StocksResponse;
 import com.sethj.stocks.model.ClosingPrice;
@@ -28,13 +25,13 @@ class StocksServiceTest {
     private StocksService stocksService;
 
     @BeforeEach
-    void init(){
+    void init() {
         webService = Mockito.mock(WebService.class);
         stocksService = new StocksService(webService);
     }
-    
-	@Test
-	void getStocksBySymbol_happyPath() {
+
+    @Test
+    void getStocksBySymbol_happyPath() {
         ClosingPrice closingPrice = new ClosingPrice("2022-04-18", BigDecimal.TEN);
         when(webService.fetchOpenCloseForDate(any(String.class), any(String.class))).thenReturn(closingPrice);
 
@@ -42,5 +39,5 @@ class StocksServiceTest {
 
         assertThat(result.getBody().getAveragePrice()).isEqualTo("10.0");
         assertThat(result.getBody().getClosingPrices()).hasSize(11);
-	}
+    }
 }

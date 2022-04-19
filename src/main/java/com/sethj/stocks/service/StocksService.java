@@ -1,6 +1,5 @@
 package com.sethj.stocks.service;
 
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -24,29 +23,29 @@ public class StocksService {
         this.webService = webService;
     }
 
-    public ResponseEntity<StocksResponse> getStocksBySymbol(String symbol){
+    public ResponseEntity<StocksResponse> getStocksBySymbol(String symbol) {
         List<ClosingPrice> closingPrices = getClosingPricesForTheLast11Days(symbol);
 
-        double averageClosingPrice = 
-            calculateAverage(closingPrices.stream()
+        double averageClosingPrice = calculateAverage(closingPrices.stream()
                 .filter(c -> c.getClosingPrice().doubleValue() > 0.0)
                 .map(c -> c.getClosingPrice())
                 .collect(Collectors.toList()));
 
-        return new ResponseEntity<>(new StocksResponse(String.valueOf(averageClosingPrice), closingPrices), HttpStatus.OK);
+        return new ResponseEntity<>(new StocksResponse(String.valueOf(averageClosingPrice), closingPrices),
+                HttpStatus.OK);
     }
 
-    private double calculateAverage(List<BigDecimal> numbers){
+    private double calculateAverage(List<BigDecimal> numbers) {
         double sum = 0.0;
 
-        for(BigDecimal number : numbers){
+        for (BigDecimal number : numbers) {
             sum += number.doubleValue();
         }
 
-        return sum/numbers.size();
+        return sum / numbers.size();
     }
 
-    private List<ClosingPrice> getClosingPricesForTheLast11Days(String symbol){
+    private List<ClosingPrice> getClosingPricesForTheLast11Days(String symbol) {
         List<String> dateListOfLast11Days = getDateListLast11Days();
 
         List<ClosingPrice> results = new ArrayList<>();
@@ -54,25 +53,24 @@ public class StocksService {
         dateListOfLast11Days.forEach(date -> {
             ClosingPrice closingPrice = webService.fetchOpenCloseForDate(date, symbol);
 
-            if(closingPrice.getClosingPrice() != null){
+            if (closingPrice.getClosingPrice() != null) {
                 results.add(closingPrice);
-                System.out.println("Date: " + closingPrice.getDate() + " Closing Price: " + closingPrice.getClosingPrice());
+                System.out.println(
+                        "Date: " + closingPrice.getDate() + " Closing Price: " + closingPrice.getClosingPrice());
             }
         });
 
         return results;
     }
 
-    
-
-    private List<String> getDateListLast11Days(){
+    private List<String> getDateListLast11Days() {
         LocalDate today = LocalDate.now();
-        LocalDate elevenDaysAgo = today.minusDays(11); 
-    
+        LocalDate elevenDaysAgo = today.minusDays(11);
+
         return elevenDaysAgo
-            .datesUntil(today)
-            .sorted(Comparator.reverseOrder())
-            .map(date -> date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-            .collect(Collectors.toList());
+                .datesUntil(today)
+                .sorted(Comparator.reverseOrder())
+                .map(date -> date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .collect(Collectors.toList());
     }
 }
